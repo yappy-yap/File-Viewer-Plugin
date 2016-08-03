@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin 
+    id="com.outsystems.documentpreview" 
+    version="0.0.1" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>DocumentPreview</name>
+    
+    <js-module name="DocumentPreview" src="www/DocumentPreview.js">
+        <clobbers target="cordova.plugins.DocumentPreview" />
+    </js-module>
+    
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="DocumentPreview">
+                <param name="ios-package" value="DocumentPreview" />
+            </feature>
+        </config-file>
+        
+        <source-file src="src/ios/DocumentPreview.m" />
+        
+        <header-file src="src/ios/DocumentViewerViewController.h" />
+        <source-file src="src/ios/DocumentViewerViewController.m" />
+        <header-file src="src/ios/DocumentWebviewViewController.h" />
+        <source-file src="src/ios/DocumentWebviewViewController.m" />
+
+        <framework src="MediaPlayer.framework" />
+    </platform>
+    
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="DocumentPreview">
+                <param name="android-package" value="com.outsystems.documentpreview.DocumentPreview" />
+            </feature>
+        </config-file>
+        
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        
+        <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview/DocumentPreview" />
+    </platform>
+    
+</plugin>
