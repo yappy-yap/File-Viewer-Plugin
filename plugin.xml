@@ -37,7 +37,7 @@
         
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
         
-        <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview/DocumentPreview" />
+        <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview" />
     </platform>
     
 </plugin>
