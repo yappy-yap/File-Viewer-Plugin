@@ -53,16 +53,6 @@
             return;
         }
         
-        //
-      /*  NSFileManager *fm = [NSFileManager defaultManager];
-        if(![fm fileExistsAtPath: localFile]){
-            NSDictionary *jsonObj = @{@"status" : @"9",
-                                      @"message" : @"File does not exist"};
-            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                                          messageAsDictionary:jsonObj];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            return;
-        } */
 
         if([previewDoc boolValue] == YES) {
             //Preview Docs
