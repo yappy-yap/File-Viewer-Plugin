@@ -95,14 +95,9 @@ Possible `error_code` values:
 ## Support
 
 This plugin isn't supported oficial by OutSystems, but it can be used the [OutSystems Forums](https://www.outsystems.com/forums/) to get the best effort support.
-Please [open an issue](https://github.com/fraction/readme-boilerplate/issues/new) for support.
 
 #### Contributors
 - OutSystems - Mobility Experts
-    - João Gonçalves, <joao.goncalves@outsystems.com>
-    - Rúben Gonçalves, <ruben.goncalves@outsystems.com>
-    - Vitor Oliveira, <vitor.oliveira@outsystems.com>
-    - Domingos Gomes, <domingos.gomes@outsystems.com>
 
 #### Document author
 - Vitor Oliveira, <vitor.oliveira@outsystems.com>
