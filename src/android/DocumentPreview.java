@@ -13,9 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * This class echoes a string called from JavaScript.
- */
+
 public class DocumentPreview extends CordovaPlugin {
 
     private final static String KEY_ACTION_OPEN_DOCUMENT = "openDocument";
