@@ -94,7 +94,7 @@ Possible `error_code` values:
 
 ## Support
 
-This plugin isn't supported oficial by OutSystems, but it can be used the [OutSystems Forums](https://www.outsystems.com/forums/) to get the best effort support.
+This plugin is not supported by OutSystems. You may use the [discussion forums](https://www.outsystems.com/forums/) to leave suggestions or obtain best-effort support from the community, including from OutSystems Experts who created this component.
 
 #### Contributors
 - OutSystems - Mobility Experts
