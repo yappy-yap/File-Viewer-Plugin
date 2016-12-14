@@ -1,4 +1,4 @@
-# Document Viewer Plugin
+# File Viewer Plugin
 
 Leverage your hybrid applications to open documents in a preview mode or with an external application.
 
@@ -28,7 +28,7 @@ function onDeviceReady() {
 - Run the following command:
 
 ```shell
-    cordova plugin add https://github.com/OutSystemsExperts/document-viewer-plugin.git
+    cordova plugin add https://github.com/OutSystemsExperts/File-Viewer-Plugin.git
 ``` 
 ---
 
