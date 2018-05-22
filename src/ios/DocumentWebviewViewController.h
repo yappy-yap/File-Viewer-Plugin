@@ -13,6 +13,7 @@
     UIWebView *webView;
 }
 @property (retain, nonatomic) UIWebView *webView;
+@property (retain, nonatomic) UIButton *buttonCloseView;
 
 -(void) loadDocumentWithUrl:(NSString *) urlString;
 @end
