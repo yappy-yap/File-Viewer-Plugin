@@ -1,0 +1,29 @@
+{
+  "name": "File-Viewer-Plugin",
+  "version": "1.0.1",
+  "description": "File Viewer Plugin for Cordova Applications",
+  "cordova": {
+    "id": "com.outsystems.documentpreview",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OutSystemsExperts/File-Viewer-Plugin"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "OutSystems Experts",
+  "license": "The MIT License (MIT)",
+  "bugs": {
+    "url": "https://github.com/OutSystemsExperts/File-Viewer-Plugin/issues"
+  },
+  "homepage": "https://github.com/OutSystemsExperts/File-Viewer-Plugin#readme"
+}
