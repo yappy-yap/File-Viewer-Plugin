@@ -3,15 +3,11 @@ package com.outsystems.documentpreview;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
-import android.support.v4.content.FileProvider;
 
-import org.apache.cordova.BuildHelper;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
@@ -20,10 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.List;
-
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
-import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
 
 public class DocumentPreview extends CordovaPlugin {
