@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin 
     id="com.outsystems.documentpreview" 
-    version="1.0.1" 
+    version="1.1.0" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -34,10 +34,25 @@
                 <param name="android-package" value="com.outsystems.documentpreview.DocumentPreview" />
             </feature>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="application">
+          <provider
+              android:name="com.outsystems.documentpreview.FileProvider"
+              android:authorities="${applicationId}.opener.provider"
+              android:exported="false"
+              android:grantUriPermissions="true" >
+              <meta-data
+                  android:name="android.support.FILE_PROVIDER_PATHS"
+                  android:resource="@xml/provider_paths"/>
+          </provider>
+        </config-file>
         
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
-        
+
+        <framework src="com.android.support:support-v4:24.1.1+" />
+
         <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview" />
+        <source-file src="src/android/FileProvider.java" target-dir="src/com/outsystems/documentpreview" />
+        <source-file src="src/android/xml/provider_paths.xml" target-dir="res/xml" />
     </platform>
     
 </plugin>
