@@ -1,17 +1,29 @@
 package com.outsystems.documentpreview;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
+import android.support.v4.content.FileProvider;
 
+import org.apache.cordova.BuildHelper;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.util.List;
+
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
 
 public class DocumentPreview extends CordovaPlugin {
@@ -69,17 +81,40 @@ public class DocumentPreview extends CordovaPlugin {
 
     private void openVideoPlayer(String filePath, String fileMIMEType) throws ActivityNotFoundException {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(filePath), fileMIMEType); //"application/pdf"
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Uri videoUri;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            videoUri = Uri.parse(filePath);
+        } else {
+            //To build the File URI property, must be removed the file protocol, if it the case
+            File videoFile = new File(filePath.replace("file:///", ""));
+            videoUri = FileProvider.getUriForFile(cordova.getActivity(), cordova.getActivity().getPackageName() + ".opener.provider", videoFile);
+        }
+
+        intent.setDataAndType(videoUri, fileMIMEType);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NO_HISTORY);
         cordova.getActivity().startActivity(intent);
     }
 
     private void openDocumentLocalApp(String filePath, String fileMIMEType) throws ActivityNotFoundException {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(filePath), fileMIMEType); //"application/pdf"
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        cordova.getActivity().startActivity(intent);
+        ContentResolver cR = cordova.getActivity().getApplicationContext().getContentResolver();
 
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        Uri fileUri;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            fileUri = Uri.parse(filePath);
+        } else {
+            //To build the File URI property, must be removed the file protocol, if it the case
+            File documentFile = new File(filePath.replace("file:///", ""));
+
+            fileUri = FileProvider.getUriForFile(cordova.getActivity(), cordova.getActivity().getPackageName() + ".opener.provider", documentFile);
+        }
+
+        String mimeType = cR.getType(fileUri);
+        intent.setDataAndType(fileUri, mimeType);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        cordova.getActivity().startActivity(intent);
     }
 
     private void openUrlInBrowser(String filePath) {
