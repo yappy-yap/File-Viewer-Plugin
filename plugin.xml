@@ -42,7 +42,7 @@
               android:grantUriPermissions="true" >
               <meta-data
                   android:name="android.support.FILE_PROVIDER_PATHS"
-                  android:resource="@xml/provider_paths"/>
+                  android:resource="@xml/document_preview_provider_paths"/>
           </provider>
         </config-file>
         
@@ -52,7 +52,7 @@
 
         <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview" />
         <source-file src="src/android/FileProvider.java" target-dir="src/com/outsystems/documentpreview" />
-        <source-file src="src/android/xml/provider_paths.xml" target-dir="res/xml" />
+        <source-file src="src/android/xml/document_preview_provider_paths.xml" target-dir="res/xml" />
     </platform>
     
 </plugin>
