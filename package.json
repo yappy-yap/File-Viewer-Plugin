@@ -1,6 +1,6 @@
 {
   "name": "File-Viewer-Plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "File Viewer Plugin for Cordova Applications",
   "cordova": {
     "id": "com.outsystems.documentpreview",
