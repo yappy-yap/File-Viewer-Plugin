@@ -48,7 +48,7 @@
         
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
 
-        <framework src="com.android.support:support-v4:24.1.1+" />
+        <framework custom="true" src="src/android/build.gradle" type="gradleReference"/>
 
         <source-file src="src/android/DocumentPreview.java" target-dir="src/com/outsystems/documentpreview" />
         <source-file src="src/android/FileProvider.java" target-dir="src/com/outsystems/documentpreview" />
