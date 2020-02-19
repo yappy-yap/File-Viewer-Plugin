@@ -10,7 +10,6 @@
   NSString *localFile;
 }
 
-@property (nonatomic, retain) AVPlayerViewController *avPlayerViewcontroller;
 @property (retain, nonatomic) DocumentViewerViewController* previewViewController;
 
 - (void)openDocument:(CDVInvokedUrlCommand*)command;
