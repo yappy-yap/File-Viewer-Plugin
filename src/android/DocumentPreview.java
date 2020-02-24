@@ -33,11 +33,9 @@ public class DocumentPreview extends CordovaPlugin {
 
     private void openDocument(JSONArray args, CallbackContext callbackContext) {
         String filePath = null;
-        String fileMIMEType = null;
         String previewDocument = null;
         try {
             filePath = args.getString(0);
-            fileMIMEType = args.getString(1);
             previewDocument = args.getString(2);
         } catch (JSONException e) {
             callbackContext.error(buildErrorResponse(1, "Invalid arguments"));
@@ -45,12 +43,6 @@ public class DocumentPreview extends CordovaPlugin {
         }
         if (filePath != null || filePath.length() > 0) {
 
-            // Check if it's a video
-            if (fileMIMEType.contains("video")) {
-                openVideoPlayer(filePath, fileMIMEType);
-                callbackContext.success();
-                return;
-            }
             // Check if it's a url instead of file path
             if (URLUtil.isValidUrl(filePath) && (filePath.contains("http://") || filePath.contains("https://"))) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(filePath));
@@ -60,7 +52,7 @@ public class DocumentPreview extends CordovaPlugin {
             }
 
             try {
-                openDocumentLocalApp(filePath, fileMIMEType);
+                openDocumentLocalApp(filePath);
                 callbackContext.success();
             } catch (ActivityNotFoundException exp) {
                 callbackContext.error(buildErrorResponse(5, "There aren't Applications to open this document."));
@@ -71,24 +63,7 @@ public class DocumentPreview extends CordovaPlugin {
         callbackContext.error(buildErrorResponse(2, "Invalid path to open"));
     }
 
-    private void openVideoPlayer(String filePath, String fileMIMEType) throws ActivityNotFoundException {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-
-        Uri videoUri;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            videoUri = Uri.parse(filePath);
-        } else {
-            //To build the File URI property, must be removed the file protocol, if it the case
-            File videoFile = new File(filePath.replace("file:///", ""));
-            videoUri = FileProvider.getUriForFile(cordova.getActivity(), cordova.getActivity().getPackageName() + ".opener.provider", videoFile);
-        }
-
-        intent.setDataAndType(videoUri, fileMIMEType);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        cordova.getActivity().startActivity(intent);
-    }
-
-    private void openDocumentLocalApp(String filePath, String fileMIMEType) throws ActivityNotFoundException {
+    private void openDocumentLocalApp(String filePath) throws ActivityNotFoundException {
         ContentResolver cR = cordova.getActivity().getApplicationContext().getContentResolver();
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
