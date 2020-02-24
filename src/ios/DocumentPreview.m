@@ -1,7 +1,7 @@
 /********* DocumentPreview.m Cordova Plugin Implementation *******/
 
 #import <Cordova/CDV.h>
-#import <MediaPlayer/MediaPlayer.h>
+#import <AVKit/AVKit.h>
 #import "DocumentViewerViewController.h"
 #import "DocumentWebviewViewController.h"
 
@@ -78,19 +78,20 @@
 }
 
 
--(void) openVideoUrl:(NSString*) url andCommand:(CDVInvokedUrlCommand*) command
-{
+-(void) openVideoUrl:(NSString*) url andCommand:(CDVInvokedUrlCommand*) command {
     CDVPluginResult* pluginResult = nil;
-    NSURL *videoURL;
     
-    videoURL = [NSURL URLWithString:url];
-    
-    NSLog(@"url %@", videoURL);
-    MPMoviePlayerViewController *videoPlayerView = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
-    [super.viewController presentMoviePlayerViewControllerAnimated:videoPlayerView];
-    [videoPlayerView.moviePlayer play];
+    NSURL *videoURL = [NSURL URLWithString:url];
+    AVPlayer *player = [AVPlayer playerWithURL:videoURL];
+    AVPlayerViewController *playerViewController = [AVPlayerViewController new];
+    playerViewController.player = player;
+    [super.viewController presentViewController:playerViewController animated:YES completion:^{
+      [playerViewController.player play];
+    }];
     
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    
 }
+
 @end
