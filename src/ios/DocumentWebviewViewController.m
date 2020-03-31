@@ -3,7 +3,7 @@
 //  OutSystems
 //
 //  Created by Vitor Oliveira on 01/08/16.
-//
+//  Updated by Andre Grillo on 31/03/20
 //
 
 #import "DocumentWebviewViewController.h"
@@ -33,6 +33,21 @@
     //do something like background color, title, etc you self
     [self.view addSubview:navbar];
     
+    //Sets the WKWebView to scale pages to fit
+    NSString *jScript = @"";
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-height'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    }    else {
+        jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    }
+    WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+    WKUserContentController *wkUController = [[WKUserContentController alloc] init];
+    [wkUController addUserScript:wkUScript];
+    WKWebViewConfiguration *wkWebConfig = [[WKWebViewConfiguration alloc] init];
+    wkWebConfig.userContentController = wkUController;
+   //
+    
     self.buttonCloseView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.buttonCloseView addTarget:self
                action:@selector(backButtonPressed:)
@@ -47,15 +62,11 @@
     [self.view addSubview:self.buttonCloseView];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 70, [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height - 70))];
+        self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 70, [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height - 70)) configuration:wkWebConfig];
     } else {
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height - 50))];
+        self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, ([[UIScreen mainScreen] bounds].size.height - 50)) configuration:wkWebConfig];
     }
     [[self.webView scrollView] setContentOffset:CGPointMake(0,500) animated:YES];
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"window.scrollTo(0.0, 50.0)"]];
-    
-    //Enabling zoom for preview
-    self.webView.scalesPageToFit=YES;
     
     //Handle with rotation on iPhoneX
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated:) name:UIDeviceOrientationDidChangeNotification object:nil];
