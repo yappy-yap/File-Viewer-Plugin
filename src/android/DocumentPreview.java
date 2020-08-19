@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 
 import org.apache.cordova.CordovaPlugin;
@@ -63,8 +64,16 @@ public class DocumentPreview extends CordovaPlugin {
         callbackContext.error(buildErrorResponse(2, "Invalid path to open"));
     }
 
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
     private void openDocumentLocalApp(String filePath) throws ActivityNotFoundException {
-        ContentResolver cR = cordova.getActivity().getApplicationContext().getContentResolver();
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
@@ -78,7 +87,7 @@ public class DocumentPreview extends CordovaPlugin {
             fileUri = FileProvider.getUriForFile(cordova.getActivity(), cordova.getActivity().getPackageName() + ".opener.provider", documentFile);
         }
 
-        String mimeType = cR.getType(fileUri);
+        String mimeType = getMimeType(filePath);
         intent.setDataAndType(fileUri, mimeType);
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NO_HISTORY);
         cordova.getActivity().startActivity(intent);
