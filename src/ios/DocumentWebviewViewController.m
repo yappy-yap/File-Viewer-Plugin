@@ -35,12 +35,12 @@
     
     //Sets the WKWebView to scale pages to fit
     NSString *jScript = @"";
-    //if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    //{
-    //    jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-height'); document.getElementsByTagName('head')[0].appendChild(meta);";
-    //}    else {
-        jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
-    //}
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-height, shrink-to-fit=YES'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    }    else {
+        jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width, shrink-to-fit=YES'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    }
     WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     WKUserContentController *wkUController = [[WKUserContentController alloc] init];
     [wkUController addUserScript:wkUScript];
