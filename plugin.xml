@@ -16,6 +16,7 @@
             <feature name="DocumentPreview">
                 <param name="ios-package" value="DocumentPreview" />
             </feature>
+            <preference name="EnableViewportScale" value="true"/>
         </config-file>
         
         <source-file src="src/ios/DocumentPreview.m" />
